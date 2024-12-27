@@ -1,128 +1,20 @@
-// //example 1
-
-// document
-//   .getElementById("changeTextButton")
-//   .addEventListener("click", function () {
-//     let paragraph = document.getElementById("myParagraph");
-//     paragraph.textContent = "the paragraph is changed";
-//   });
-
-// //example 2
-
-// document
-//   .getElementById("highlightFirstCity")
-//   .addEventListener("click", function () {
-//     let citiesList = document.getElementById("citiesList");
-//     citiesList.firstElementChild.classList.add("highlight");
-//   });
-
-// //example 3
-
-// document.getElementById("changeOrder").addEventListener("click", function () {
-//   let coffeeType = document.getElementById("coffeeType");
-//   coffeeType.textContent = "Espresso";
-//   coffeeType.style.backgroundColor = "brown";
-//   coffeeType.style.padding = "5px";
-// });
-
-// //example 4
-// document.getElementById("addNewItem").addEventListener("click", function () {
-//   let newItem = document.createElement("li");
-//   newItem.textContent = "Eggs";
-
-//   document.getElementById("shoppingList").appendChild(newItem);
-// });
-
-// //example 5
-// document
-//   .getElementById("removeLastTask")
-//   .addEventListener("click", function () {
-//     let taskList = document.getElementById("taskList");
-//     taskList.lastElementChild.remove();
-//   });
-
-// // example 6
-
-// document
-//   .getElementById("clickMeButton")
-//   .addEventListener("dblclick", function () {
-//     alert("chaicode");
-//   });
-
-// // example 7
-
-// document.getElementById("teaList").addEventListener("click", function (event) {
-//   if (event.target && event.target.matches(".teaItem")) {
-//     alert("You selected: " + event.target.textContent);
-//   }
-// });
-
-// //example 8
-
-// document
-//   .getElementById("feedbackForm")
-//   .addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     let feedback = document.getElementById("feedbackInput").value;
-//     console.log(feedback);
-//     document.getElementById(
-//       "feedbackDisplay"
-//     ).textContent = `Feedback is: ${feedback}`;
-//   });
-
-// //example 9
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   document.getElementById("domStatus").textContent = "DOM fully loaded";
-// });
-
-// //example 10
-// document
-//   .getElementById("toggleHighlight")
-//   .addEventListener("click", function () {
-//     let descriptionText = document.getElementById("descriptionText");
-//     descriptionText.classList.toggle("highlight");
-//   });
+const todoinput = document.getElementById("todo-input");
+const addTaskBtn = document.getElementById("add-task-btn");
+const todoList = document.getElementById("todo-list");
 
 
-// example 1
+let tasks = [];
 
-document.getElementById("changeTextButton").
-addEventListener('click',function() {
-    let para = document.getElementById("myParagraph");
-    para.textContent="The para is changed now" 
-})
+addTaskBtn.addEventListener('click',()=>{
+    const taskText = todoinput.value.trim();
+    if(taskText==="") return;
 
-// example 2
-
-document.getElementById("highlightFirstCity").
-addEventListener('click',function(){
-
-    let citylist = document.getElementById("citiesList");
-    citylist.firstElementChild.classList.add("highlight")
-})
-
-// example 3
-
-document.getElementById("changeOrder").
-addEventListener('click',function(){
-    let coffer = document.getElementById("coffeeType");
-    coffer.innerHTML="Espresso";
-    coffer.style.backgroundColor="brown";  
-})
-
-// example 4
-
-document.getElementById("addNewItem").addEventListener("click", function () {
-  let newItem = document.createElement("li");
-  newItem.textContent = "Eggs";
-
-  document.getElementById("shoppingList").appendChild(newItem);
+    const newTask = {
+        id:Date.now(),
+        text:taskText,
+        completed:false
+    };
+    tasks.push(newTask);
+    todoinput.value = "";
+    console.log(tasks);   
 });
-
-// example 5
-
-document.getElementById("removeLastTask").addEventListener('click',function(){
-    let list = document.getElementById("taskList");
-    list.lastElementChild.remove();
-})
