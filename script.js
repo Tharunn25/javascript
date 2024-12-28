@@ -2,8 +2,9 @@ const todoinput = document.getElementById("todo-input");
 const addTaskBtn = document.getElementById("add-task-btn");
 const todoList = document.getElementById("todo-list");
 
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-let tasks = [];
+tasks.forEach((task) => renderTask(task));
 
 addTaskBtn.addEventListener('click',()=>{
     const taskText = todoinput.value.trim();
@@ -15,6 +16,17 @@ addTaskBtn.addEventListener('click',()=>{
         completed:false
     };
     tasks.push(newTask);
+    saveTasks();
     todoinput.value = "";
     console.log(tasks);   
+
+
+function renderTask(task){
+    console.log(task);
+}
+
+function saveTasks(){
+    localStorage.setItem('tasks',JSON.stringify(tasks))
+}
+
 });
