@@ -1,32 +1,35 @@
-const todoinput = document.getElementById("todo-input");
-const addTaskBtn = document.getElementById("add-task-btn");
-const todoList = document.getElementById("todo-list");
+document.addEventListener('DOMContentLoaded',()=>{
+  const cityInput = document.getElementById('city-input');
+  const getWeatherbtn = document.getElementById('get-weather-btn');
+  const weatherInfo = document.getElementById('weather-info');
+  const cityNameDisplay = document.getElementById('city-name');
+  const temperatureDisplay = document.getElementById('temperature');
+  const descriptionDisplay = document.getElementById('description');
+  const errorMessage = document.getElementById('error-message');
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const API_KEY = "ea2695f97d7d789be8730cc57c599146"; //env variable
 
-tasks.forEach((task) => renderTask(task));
+  getWeatherbtn.addEventListener('click',()=>{
+    const city = cityInput.value.trim();
+    if(!city) return;
+  })
 
-addTaskBtn.addEventListener('click',()=>{
-    const taskText = todoinput.value.trim();
-    if(taskText==="") return;
+  function fetchWeatheData(){
+    // gets the data
 
-    const newTask = {
-        id:Date.now(),
-        text:taskText,
-        completed:false
-    };
-    tasks.push(newTask);
-    saveTasks();
-    todoinput.value = "";
-    console.log(tasks);   
+  }
+
+  function displayWeatherData(){
+    // displays the weather data
+
+  }
+
+  function showError(){
+    // shows the error
+    weatherInfo.classList.add('hidden');
+    errorMessage.classList.remove('hidden');
+  }
 
 
-function renderTask(task){
-    console.log(task);
-}
-
-function saveTasks(){
-    localStorage.setItem('tasks',JSON.stringify(tasks))
-}
 
 });
