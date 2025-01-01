@@ -1,35 +1,68 @@
 document.addEventListener('DOMContentLoaded',()=>{
-  const cityInput = document.getElementById('city-input');
-  const getWeatherbtn = document.getElementById('get-weather-btn');
-  const weatherInfo = document.getElementById('weather-info');
-  const cityNameDisplay = document.getElementById('city-name');
-  const temperatureDisplay = document.getElementById('temperature');
-  const descriptionDisplay = document.getElementById('description');
-  const errorMessage = document.getElementById('error-message');
 
-  const API_KEY = "ea2695f97d7d789be8730cc57c599146"; //env variable
+      const products = [
+        {id:1,name:"product 1",price:29},
+        {id:2,name:"product 2",price:7},
+        {id:3,name:"product 3",price:14},
+      ];
 
-  getWeatherbtn.addEventListener('click',()=>{
-    const city = cityInput.value.trim();
-    if(!city) return;
-  })
+      const cart = [];
 
-  function fetchWeatheData(){
-    // gets the data
+      const productList = document.getElementById("product-list")
+      const cartItems =document.getElementById("cart-items")
+      const empytyCartMessage =document.getElementById("empty-cart")
+      const cartTotalMessage =document.getElementById("cart-total")
+      const totalPriceDisplay =document.getElementById("total-price")
+      const checkoutBtn =document.getElementById("checkout-btn")
 
-  }
+      products.forEach((product)=>{
 
-  function displayWeatherData(){
-    // displays the weather data
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
+        productDiv.innerHTML = `
+        <span>${product.name} - $${product.price.toFixed(2)}</span>
+        <button data-id="${product.id}">Add to cart</button>
+        `;
+        productList.appendChild(productDiv);
+      });
 
-  }
+      productList.addEventListener("click",(e)=>{
+        if(e.target.tagName === 'BUTTON'){
+          const productId  = parseInt(e.target.getAttribute("data-id"));
+          const product = products.find((p) => p.id === productId)
+          addtoCart((product));
+        }
+      });
 
-  function showError(){
-    // shows the error
-    weatherInfo.classList.add('hidden');
-    errorMessage.classList.remove('hidden');
-  }
+      function addtoCart(product){
+        cart.push(product);
+        renderCart(cart); 
+      }
 
+      function renderCart(){
+        cartItems.innerText = "";
+        let totalPrice = 0
+        if (cart.length > 0) {
+          empytyCartMessage.classList.add("hidden")
+          cartTotalMessage.classList.remove("hidden")
+          cart.forEach((item,index)=>{
+            totalPrice += item.price
+            const cartItem = document.createElement('div')
+            cartItem.innerHTML = `
+            ${item.name} - $${item.price.toFixed(2)}
+            `;
+            cartItems.appendChild(cartItem);
+            totalPriceDisplay.textContent = `${totalPrice}`
+          });
+        } else {
+          empytyCartMessage.classList.remove("hidden");
+          totalPriceDisplay.textContent = `0.00`;
+        }
+      }
 
-
+      checkoutBtn.addEventListener('click',()=>{
+        cart.length = 0;
+        alert("Checkout done sucessfully");
+        renderCart();
+      })
 });
