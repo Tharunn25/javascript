@@ -1,68 +1,54 @@
 document.addEventListener('DOMContentLoaded',()=>{
+       
+         const expenseForm = document.getElementById('expense-form');
+         const expenseNameInput = document.getElementById('expense-name');
+         const expenseAmountInput = document.getElementById('expense-amount');
+         const expenseList = document.getElementById('total');
+         const totalAmountDisplay = document.getElementById('total-amount');
 
-      const products = [
-        {id:1,name:"product 1",price:29},
-        {id:2,name:"product 2",price:7},
-        {id:3,name:"product 3",price:14},
-      ];
+         let expenses = [];
+         let totalAmount = calculateTotal();
 
-      const cart = [];
 
-      const productList = document.getElementById("product-list")
-      const cartItems =document.getElementById("cart-items")
-      const empytyCartMessage =document.getElementById("empty-cart")
-      const cartTotalMessage =document.getElementById("cart-total")
-      const totalPriceDisplay =document.getElementById("total-price")
-      const checkoutBtn =document.getElementById("checkout-btn")
+         expenseForm.addEventListener('submit',(e)=>{
+            e.preventDefault()
+            const name = expenseNameInput.value.trim()
+            const amount = parseFloat(expenseAmountInput.value.trim());
 
-      products.forEach((product)=>{
+            if(name !== "" && isNaN(amount) && amount >0){
+              const newExpense = {
+                id: Date.now(),
+                name,
+                amount:amount
+              }
+              expenses.push(newExpense)
+              saveExpensesTolocal();
+            }
 
-        const productDiv = document.createElement("div");
-        productDiv.classList.add("product");
-        productDiv.innerHTML = `
-        <span>${product.name} - $${product.price.toFixed(2)}</span>
-        <button data-id="${product.id}">Add to cart</button>
-        `;
-        productList.appendChild(productDiv);
-      });
+            // clear input
 
-      productList.addEventListener("click",(e)=>{
-        if(e.target.tagName === 'BUTTON'){
-          const productId  = parseInt(e.target.getAttribute("data-id"));
-          const product = products.find((p) => p.id === productId)
-          addtoCart((product));
-        }
-      });
+            expenseNameInput.value = "";
+            expenseAmountInput.value = "";
+         });
 
-      function addtoCart(product){
-        cart.push(product);
-        renderCart(cart); 
-      }
 
-      function renderCart(){
-        cartItems.innerText = "";
-        let totalPrice = 0
-        if (cart.length > 0) {
-          empytyCartMessage.classList.add("hidden")
-          cartTotalMessage.classList.remove("hidden")
-          cart.forEach((item,index)=>{
-            totalPrice += item.price
-            const cartItem = document.createElement('div')
-            cartItem.innerHTML = `
-            ${item.name} - $${item.price.toFixed(2)}
-            `;
-            cartItems.appendChild(cartItem);
-            totalPriceDisplay.textContent = `${totalPrice}`
-          });
-        } else {
-          empytyCartMessage.classList.remove("hidden");
-          totalPriceDisplay.textContent = `0.00`;
-        }
-      }
+         function calculateTotal(){
+             
+             return expenses
 
-      checkoutBtn.addEventListener('click',()=>{
-        cart.length = 0;
-        alert("Checkout done sucessfully");
-        renderCart();
-      })
+         };
+
+         function saveExpensesTolocal(){
+          localStorage.setItem("expenses",JSON.stringify(expenses))
+         }
+
+         
+
+
+
+
+
+
+
+
 });
