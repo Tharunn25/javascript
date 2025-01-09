@@ -13,7 +13,9 @@ let tesla = {
     driver:"AI",
 }
 
+
 Object.setPrototypeOf(tesla,genericCar);
+
 
 console.log(`tesla`,genericCar);
 
